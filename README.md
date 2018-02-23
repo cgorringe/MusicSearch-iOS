@@ -6,7 +6,7 @@ An example native iOS App written in Objective-C that searches the iTunes API fo
 
 
 ![](img/screenshot1.png)
-
+![](img/screenshot2.png)
 
 ## License
 
