@@ -101,7 +101,7 @@
                         music.trackName = (item[@"trackName"]) ? item[@"trackName"] : @"";
                         music.artistName = (item[@"artistName"]) ? item[@"artistName"] : @"";
                         music.albumName = (item[@"collectionName"]) ? item[@"collectionName"] : @"";
-                        music.albumImageUrl = (item[@"collectionViewUrl"]) ? item[@"collectionViewUrl"] : nil;
+                        music.albumImageUrl = (item[@"artworkUrl100"]) ? item[@"artworkUrl100"] : nil;
                         [musicResults addObject:music];
                     }
                 }
@@ -142,7 +142,6 @@
                     fixedData = [self fixInvalidJSONData:data];
                     jsonRoot = [NSJSONSerialization JSONObjectWithData:fixedData options:kNilOptions error:nil];
                 }
-//                NSLog(@"jsonRoot: %@", jsonRoot);  // TEST
                 if (jsonRoot && jsonRoot[@"lyrics"]) {
                     lyrics = jsonRoot[@"lyrics"];
                 }
@@ -162,7 +161,8 @@
 
     UIImageView *imageView = userInfo[@"imageView"];
     NSString *imageUrl = userInfo[@"imageUrl"];
-    NSString *filename = [[NSURL URLWithString:imageUrl] lastPathComponent];
+    //NSString *filename = [[NSURL URLWithString:imageUrl] lastPathComponent];  // not a good choice
+    NSString *filename = [[[NSURL URLWithString:imageUrl] pathComponents] componentsJoinedByString:@""]; // better
 
     // first check if image is in local cache
     UIImage *image;
@@ -178,8 +178,15 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (data) {
                         UIImage *downloadedImg = [UIImage imageWithData:data];
-                        imageView.image = downloadedImg;
-                        [self.imageCache saveImage:downloadedImg withFilename:filename];
+                        if (downloadedImg) {
+                            imageView.image = downloadedImg;
+                            if (![self.imageCache saveImage:downloadedImg withFilename:filename]) {
+                                NSLog(@"*** image didn't save! filename: %@", filename);
+                            }
+                        }
+                        else {
+                            NSLog(@"*** downloadedImg is nil!");
+                        }
                     }
                 });
     }] resume];

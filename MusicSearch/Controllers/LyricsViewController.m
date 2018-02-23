@@ -46,8 +46,14 @@
         self.trackLabel.text = self.music.trackName;
         self.artistLabel.text = self.music.artistName;
         self.albumLabel.text = self.music.albumName;
-        self.albumImageView.image = [UIImage imageNamed:@"music-placeholder"]; // TODO
+        self.albumImageView.image = [UIImage imageNamed:@"music-placeholder"];  // default image
 
+        // send notification to retrieve image
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"DownloadImage"
+                                                            object:self
+                                                          userInfo:@{ @"imageView" : self.albumImageView,
+                                                                      @"imageUrl" : self.music.albumImageUrl
+                                                                      }];
         // retrieve lyrics from API
         if (self.api) {
             [self.api getLyricsForArtist:self.music.artistName

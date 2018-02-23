@@ -25,31 +25,6 @@
     return self;
 }
 
-/*
- // don't need
-- (NSString *)cachesDirectory {
-
-    NSString *path = nil;
-    NSArray *pathList = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    if (pathList.count > 0) {
-        NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-        path = [[pathList objectAtIndex:0] stringByAppendingPathComponent:bundleName];
-    }
-    return path;
-}
-//*/
-/*
-- (UIImage *)imageWithUrl:(NSString *)url {
-    return self.imageCache[url];
-}
-
-- (BOOL)cacheImage:(UIImage *)image withUrl:(NSString *)url {
-    // TODO
-    self.imageCache[url] = image;
-    return YES;
-}
-//*/
-
 - (BOOL)saveImage:(UIImage *)image withFilename:(NSString *)filename {
     NSURL *url = [self.cacheDir URLByAppendingPathComponent:filename];
     NSData *data = UIImagePNGRepresentation(image);

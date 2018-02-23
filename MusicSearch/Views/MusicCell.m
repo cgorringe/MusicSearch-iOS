@@ -26,6 +26,13 @@
     self.trackLabel.text = musicModel.trackName;
     self.artistLabel.text = musicModel.artistName;
     self.albumLabel.text = musicModel.albumName;
+
+    // send notification to retrieve image
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DownloadImage"
+                                                        object:self
+                                                      userInfo:@{ @"imageView" : self.albumImageView,
+                                                                  @"imageUrl" : musicModel.albumImageUrl
+                                                                }];
 }
 
 @end

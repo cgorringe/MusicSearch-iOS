@@ -95,10 +95,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     MusicCell *cell = [tableView dequeueReusableCellWithIdentifier:@"idMusicCell" forIndexPath:indexPath];
-    [cell updateWithMusicModel:self.resultsList[indexPath.row]];
 
-    // TODO: get image from image cache using async call
-    cell.albumImageView.image = [UIImage imageNamed:@"music-placeholder"];
+    cell.albumImageView.image = [UIImage imageNamed:@"music-placeholder"];  // default image
+    [cell updateWithMusicModel:self.resultsList[indexPath.row]];
 
     return cell;
 }

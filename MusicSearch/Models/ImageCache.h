@@ -11,8 +11,6 @@
 
 @interface ImageCache : NSObject
 
-//@property (nonatomic, readonly) NSString *cachesDirectory;
-
 - (BOOL)saveImage:(UIImage *)image withFilename:(NSString *)filename;
 - (UIImage *)loadImageWithFilename:(NSString *)filename;
 
